@@ -1,7 +1,7 @@
-import regex as re
+import re
 
 
-EMOJI = re.compile(u".*", re.UNICODE)
+EMOJI = re.compile(u"(?:(?:[\ud83c-\ud83e][\udc00-\udfff])|[\u00a0-\u329f])(?:\ud83c[\udffb-\udfff]|[\ufe0e-\ufe0f])?")
 
 
 def surrogate_pairs(code_point):
@@ -39,4 +39,5 @@ def extract(s):
 if __name__ == "__main__":
     import sys
 
-    print surrogate_pairs(sys.argv[1])
+    for code_point in sys.argv[1:]:
+        print surrogate_pairs(code_point)
