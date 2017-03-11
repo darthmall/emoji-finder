@@ -15,8 +15,7 @@ def surrogate_pairs(code_point):
     """Return the UTF-16 high and low surrogates for a unicode code point.
 
     Arguments:
-    code_point -- A string representation of the form 'U+xxxxx' or
-                     '\Uxxxxxxxx'
+    code_point -- A string representation of the form 'U+xxxxx' or '\Uxxxxxxxx'
 
     Returns:
     A tuple containing the surrogate pairs as hexadecimal strings:
