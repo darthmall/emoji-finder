@@ -44,6 +44,11 @@ def extract(s):
     return EMOJI.findall(s)
 
 
+def test(s):
+    """Return true if the string contains any emoji."""
+    return EMOJI.search(s) is not None
+
+
 if __name__ == "__main__":
     import sys
 

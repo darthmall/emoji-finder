@@ -36,6 +36,10 @@ class TestEmoji(unittest.TestCase):
         self.assertEqual(emoji.extract(u"He🤦llo, 😂. 🤡"),
                          [u"🤦", u"😂", u"🤡"])
 
+    def test_test(self):
+        self.assertTrue(emoji.test("hello 🇯🇵"))
+        self.assertFalse(emoji.test("hello japan"))
+
 
 if __name__ == "__main__":
     unittest.main()
