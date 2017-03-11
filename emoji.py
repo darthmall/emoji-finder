@@ -4,10 +4,25 @@ import regex as re
 EMOJI = re.compile(u".*", re.UNICODE)
 
 
-def surrogate_pairs(codepoint):
-    ordinal = int(codepoint[2:], 16)
+def surrogate_pairs(code_point):
+    """Return the UTF-16 high and low surrogates for a unicode code point.
+
+    Arguments:
+    code_point -- A string representation of the form 'U+xxxxx' or
+                     '\Uxxxxxxxx'
+
+    Returns:
+    A tuple containing the surrogate pairs as hexadecimal strings:
+    (high, low), or (code_point,) if the code point is in the Basic
+    Multilingual Plane.
+    """
+    # Strip the first two characters, assuming either "\U" or "U+"
+    # prefixes on the code point.
+    ordinal = int(code_point[2:], 16)
 
     if ordinal <= 0xd7ff or (ordinal >= 0xe000 and ordinal <= 0xffff):
+        # Code points in the range U+0000-U+D7FF and U+E000-U+FFFF
+        # need no conversion.
         return (hex(ordinal), )
 
     bits = bin(ordinal - 0x10000)[2:].zfill(20)
