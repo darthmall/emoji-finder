@@ -10,6 +10,8 @@ EMOJI = re.compile(u"(?:[\u00a0-\u329f]"
                    u"|[\ud83c-\ud83e][\udc00-\udfff])"
                    u"(?:[\ufe0e-\ufe0f]|\ud83c[\udffb-\udfff])?")
 
+VARIANTS = re.compile(u"(?:[\ufe0e-\ufe0f]|\ud83c[\udffb-\udfff])")
+
 
 def surrogate_pairs(code_point):
     """Return the UTF-16 high and low surrogates for a unicode code point.
@@ -46,6 +48,11 @@ def extract(s):
 def test(s):
     """Return true if the string contains any emoji."""
     return EMOJI.search(s) is not None
+
+
+def normalize(s):
+    """Return the string with all variant characters removed."""
+    return VARIANTS.sub(u"", s)
 
 
 if __name__ == "__main__":
