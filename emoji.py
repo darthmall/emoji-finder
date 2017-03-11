@@ -1,7 +1,14 @@
 import re
 
-
-EMOJI = re.compile(u"(?:(?:[\ud83c-\ud83e][\udc00-\udfff])|[\u00a0-\u329f])(?:\ud83c[\udffb-\udfff]|[\ufe0e-\ufe0f])?")
+# Regex for matching emoji and other symbols: first line catches all
+# symbols in the Basic Multilingual Plane (BMP), second line catches
+# emoji and symbols in Supplementary Planes, third line includes
+# subsequent characters that modify emoji: i.e. text or emoji variant
+# and skin tones, so that those characters are kept with the characters
+# they affect when tokenizing.
+EMOJI = re.compile(u"(?:[\u00a0-\u329f]"
+                   u"|[\ud83c-\ud83e][\udc00-\udfff])"
+                   u"(?:[\ufe0e-\ufe0f]|\ud83c[\udffb-\udfff])?")
 
 
 def surrogate_pairs(code_point):
@@ -33,6 +40,7 @@ def surrogate_pairs(code_point):
 
 
 def extract(s):
+    """Return a list of each individual emoji in the string."""
     return EMOJI.findall(s)
 
 
